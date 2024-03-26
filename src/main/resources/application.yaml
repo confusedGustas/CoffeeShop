@@ -1,0 +1,27 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-exception: false
+  servlet:
+    session:
+      timeout: 1m
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    open-in-view: false
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/coffeeshop
+    username: postgres
+    password: postgres
+  security:
+    user:
+      name: admin
+      password: admin

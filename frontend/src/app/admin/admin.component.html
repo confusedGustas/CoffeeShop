@@ -1,0 +1,194 @@
+<div class="bg-background">
+  <header class="bg-header py-4 text-gray-800">
+    <div class="flex items-center justify-center">
+      <a class="text-4xl font-crayon">Admin Coffee Shop</a>
+    </div>
+    <nav class="mt-4 flex flex-wrap justify-center font-crayon">
+      <a href="/" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">Home</a>
+      <a href="/about"  class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">About</a>
+      <a href="/contact" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">Contact</a>
+      <button (click)="togglePasswordModal()" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">Change Password</button>
+      <button (click)="logout()" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">Logout</button>
+    </nav>
+  </header>
+  <main class="font-crayon container mx-auto py-5 text-center">
+    <div class="flex flex-col">
+      <h4 class="text-xl font-bold">Coffee</h4>
+      <form [formGroup]="CoffeeForm" (ngSubmit)="add('Coffee')" class="mb-2">
+        <div class="flex flex-wrap justify-center">
+          @for (menuItem of menuItems; track menuItems) {
+            @if (menuItem.category === 'Coffee') {
+              <div class="border rounded inline-block min-w-96 max-w-96 mx-1 mb-4">
+                <div class="p-2">
+                  <div class="flex justify-center">
+                    <p class="mb-2 font-bold overflow-auto break-words">{{ menuItem.name }}</p>
+                    <button (click)="delete(menuItem.id)" class="mb-2 mx-2 font-bold inline-block rounded border">Delete</button>
+                    <button (click)="toggleModalOn(menuItem.id)" class="mb-2 font-bold inline-block rounded border">Edit</button>
+                  </div>
+                  <p class="mb-2 overflow-auto break-words">{{ menuItem.description }}</p>
+                  <p class="underline">{{ menuItem.price }}€</p>
+                </div>
+              </div>
+            }
+          }
+        </div>
+        <div class="menu-item inline-block">
+          <div class="border border-gray-300 rounded-md p-4">
+            <div class="flex flex-col">
+              <div class="flex flex-col">
+                <span class="text-left">Product Name: </span>
+                <input formControlName="name" form type="text" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Product Name">
+                @if (CoffeeForm.controls["name"].touched && CoffeeForm.controls["name"].invalid) {
+                  <div class="text-red-500 text-xs">You must provide a name</div>
+                }
+              </div>
+              <div class="flex flex-col mt-2">
+                <span class="text-left">Price: </span>
+                <input formControlName="price" type="text" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Price">
+                @if (CoffeeForm.controls["price"].touched && CoffeeForm.controls["price"].invalid) {
+                  <div class="text-red-500 text-xs">You must provide a price</div>
+                }
+              </div>
+              <div class="flex flex-col mt-2">
+                <span class="text-left">Description: </span>
+                <textarea formControlName="description" class="h-20 w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Description" style="resize: none;"></textarea>
+                @if (CoffeeForm.controls["description"].touched && CoffeeForm.controls["description"].invalid) {
+                  <div class="text-red-500 text-xs">You must provide a description</div>
+                }
+              </div>
+            </div>
+            <button [disabled]="!CoffeeForm.valid" class="underline mt-4">Add Product</button>
+          </div>
+        </div>
+      </form>
+      <h4 class="text-xl font-bold">Snacks</h4>
+      <div class="flex flex-wrap justify-center">
+        @for (menuItem of menuItems; track menuItems) {
+          @if (menuItem.category === 'Snacks') {
+            <div class="border rounded inline-block min-w-96 max-w-96 mx-1 mb-4">
+              <div class="p-2">
+                <div class="flex justify-center">
+                  <p class="mb-2 font-bold overflow-auto break-words">{{ menuItem.name }}</p>
+                  <button (click)="delete(menuItem.id)" class="mb-2 mx-2 font-bold inline-block rounded border">Delete</button>
+                  <button (click)="toggleModalOn(menuItem.id)" class="mb-2 font-bold inline-block rounded border">Edit</button>
+                </div>
+                <p class="mb-2 overflow-auto break-words">{{ menuItem.description }}</p>
+                <p class="underline">{{ menuItem.price }}€</p>
+              </div>
+            </div>
+          }
+        }
+      </div>
+      <form [formGroup]="SnacksForm" (ngSubmit)="add('Snacks')" class="mb-2">
+        <div class="menu-item inline-block">
+          <div class="border border-gray-300 rounded-md p-4">
+            <div class="flex flex-col">
+              <div class="flex flex-col">
+                <span class="text-left">Product Name: </span>
+                <input formControlName="name" form type="text" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Product Name">
+                @if (SnacksForm.controls["name"].touched && SnacksForm.controls["name"].invalid) {
+                  <div class="text-red-500 text-xs">You must provide a name</div>
+                }
+              </div>
+              <div class="flex flex-col mt-2">
+                <span class="text-left">Price: </span>
+                <input formControlName="price" type="text" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Price">
+                @if (SnacksForm.controls["price"].touched && SnacksForm.controls["price"].invalid) {
+                  <div class="text-red-500 text-xs">You must provide a price</div>
+                }
+              </div>
+              <div class="flex flex-col mt-2">
+                <span class="text-left">Description: </span>
+                <textarea formControlName="description" class="h-20 w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Description" style="resize: none;"></textarea>
+                @if (SnacksForm.controls["description"].touched && SnacksForm.controls["description"].invalid) {
+                  <div class="text-red-500 text-xs">You must provide a description</div>
+                }
+              </div>
+            </div>
+            <button [disabled]="!SnacksForm.valid" class="underline mt-4">Add Product</button>
+          </div>
+        </div>
+      </form>
+      <h4 class="text-xl font-bold">Desserts</h4>
+      <form [formGroup]="DesertsForm" (ngSubmit)="add('Desserts')" class="mb-4">
+        <div class="flex flex-wrap justify-center">
+          @for (menuItem of menuItems; track menuItems) {
+            @if (menuItem.category === 'Desserts') {
+              <div class="border rounded inline-block min-w-96 max-w-96 mx-1 mb-4">
+                <div class="p-2">
+                  <div class="flex justify-center">
+                    <p class="mb-2 font-bold overflow-auto break-words">{{ menuItem.name }}</p>
+                    <button (click)="delete(menuItem.id)" class="mb-2 mx-2 font-bold inline-block rounded border">Delete</button>
+                    <button (click)="toggleModalOn(menuItem.id)" class="mb-2 font-bold inline-block rounded border">Edit</button>
+                  </div>
+                  <p class="mb-2 overflow-auto break-words">{{ menuItem.description }}</p>
+                  <p class="underline">{{ menuItem.price }}€</p>
+                </div>
+              </div>
+            }
+          }
+        </div>
+        <div class="menu-item inline-block">
+          <div class="border border-gray-300 rounded-md p-4">
+            <div class="flex flex-col">
+              <div class="flex flex-col">
+                <span class="text-left">Product Name: </span>
+                <input formControlName="name" type="text" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Product Name">
+                @if (DesertsForm.controls["name"].touched && DesertsForm.controls["name"].invalid) {
+                  <div class="text-red-500 text-xs">You must provide a name</div>
+                }
+              </div>
+              <div class="flex flex-col mt-2">
+                <span class="text-left">Price: </span>
+                <input formControlName="price" type="text" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Price">
+                @if (DesertsForm.controls["price"].touched && DesertsForm.controls["price"].invalid) {
+                  <div class="text-red-500 text-xs">You must provide a price</div>
+                }
+              </div>
+              <div class="flex flex-col mt-2">
+                <span class="text-left">Description: </span>
+                <textarea formControlName="description" class="h-20 w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Description" style="resize: none;"></textarea>
+                @if (DesertsForm.controls["description"].touched && DesertsForm.controls["description"].invalid) {
+                  <div class="text-red-500 text-xs">You must provide a description</div>
+                }
+              </div>
+            </div>
+            <button [disabled]="!DesertsForm.valid" class="underline mt-4">Add Product</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+
+@if (showModal) {
+  <div class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-black bg-opacity-50 font-crayon">
+    <form [formGroup]="EditForm" class="border p-4 bg-header flex flex-col rounded-md">
+      <p>Product Name:</p>
+      <input formControlName="name" type="text" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Product Name">
+      <span class="text-left">Price: </span>
+      <input formControlName="price" type="text" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Price">
+      <span class="text-left">Description: </span>
+      <textarea formControlName="description" class="h-20 w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Description" style="resize: none;"></textarea>
+      <div class="flex justify-center mt-2">
+        <button (click)="submitEdit()" class="mr-2 underline">Submit</button>
+        <button (click)="toggleModalOff()" class="underline">Close</button>
+      </div>
+    </form>
+  </div>
+}
+
+@if (showPasswordModal) {
+  <div class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-black bg-opacity-50 font-crayon">
+    <form [formGroup]="ChangePasswordForm" class="border p-4 bg-header flex flex-col rounded-md">
+      <p>Old Password:</p>
+      <input formControlName="oldPassword" type="password" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Product Name">
+      <span class="text-left">New Password: </span>
+      <input formControlName="newPassword" type="password" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter Price">
+      <div class="flex justify-center mt-2">
+        <button (click)="changePassword()" class="mr-2 underline">Change</button>
+        <button (click)="togglePasswordModal()" class="underline">Close</button>
+      </div>
+    </form>
+  </div>
+}

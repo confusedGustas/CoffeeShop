@@ -1,0 +1,72 @@
+<div class="bg-background h-max min-h-screen">
+  <header class="bg-header py-4 text-gray-800">
+    <div class="flex items-center justify-center">
+        <a href="/" class="text-4xl font-crayon">Coffee Shop</a>
+    </div>
+    <nav class="mt-4 flex flex-wrap justify-center font-crayon">
+      <a href="/" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">Home</a>
+      <a href="/about" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">About</a>
+      @if (isLoggedIn) {
+        <a href="/admin" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">Admin Panel</a>
+        <button (click)="logout()" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">Logout</button>
+      } @else {
+        <a href="/login" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">Login</a>
+      }
+    </nav>
+  </header>
+  <div class="flex mt-2 font-crayon">
+    <div class="w-1/2 p-8">
+      <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
+      <form [formGroup]="EmailForm" (ngSubmit)="sendEmail()">
+        <div class="mb-4">
+          <label class="block text-gray-800 font-bold">First Name</label>
+          <input formControlName="firstName" class="w-full border border-gray-400 p-2 rounded focus:outline-none focus:border-blue-500" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-800 font-bold">Last Name</label>
+          <input formControlName="lastName" class="w-full border border-gray-400 p-2 rounded focus:outline-none focus:border-blue-500" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-800 font-bold">Email</label>
+          <input formControlName="email" class="w-full border border-gray-400 p-2 rounded focus:outline-none focus:border-blue-500" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-800 font-bold">Message</label>
+          <textarea formControlName="message" rows="4" class="w-full border border-gray-400 p-2 rounded focus:outline-none focus:border-blue-500 h-64" style="resize: none;" required></textarea>
+        </div>
+        <button class="bg-blue-500 text-white rounded hover:bg-blue-600 underline">Submit</button>
+      </form>
+    </div>
+    <div class="w-1/2 p-8">
+      <div class="flex justify-start items-center">
+        <h2 class="text-2xl font-bold mb-4 mr-2">Contact Information</h2>
+        @if (isLoggedIn) {
+          <button (click)="toggleModal()" class="mb-2 font-bold inline-block rounded border">Edit</button>
+        }
+      </div>
+      <p class="mb-2"><strong>Address:</strong> {{ address }} </p>
+      <p class="mb-2"><strong>Email:</strong> {{ email }} </p>
+      <p class="mb-2"><strong>Phone:</strong> {{ phone }} </p>
+      <p class="mb-2"><strong>GitHub: </strong> <a href='{{ github }}' class="text-blue-500 underline"> {{ github }} </a></p>
+    </div>
+  </div>
+</div>
+
+@if (showModal) {
+  <div class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-black bg-opacity-50 font-crayon">
+    <form [formGroup]="EditForm" class="border p-4 bg-header flex flex-col rounded-md">
+      <p>Address:</p>
+      <input formControlName="address" type="text" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter an Address">
+      <span class="text-left">Phone: </span>
+      <input formControlName="phone" type="text" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter a Phone number">
+      <span class="text-left">Email: </span>
+      <input formControlName="email" type="text" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter an Email">
+      <span class="text-left">Link: </span>
+      <input formControlName="github" type="text" class="w-48 border border-gray-200 rounded-md p-2" placeholder="Enter a Github Link">
+      <div class="flex justify-center mt-2">
+        <button (click)="editContact()" class="mr-2 underline">Submit</button>
+        <button (click)="toggleModal()" class="underline">Close</button>
+      </div>
+    </form>
+  </div>
+}

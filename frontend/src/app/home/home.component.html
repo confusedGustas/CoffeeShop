@@ -1,0 +1,82 @@
+<div class="h-max min-h-screen bg-background">
+  <header class="bg-header py-4 text-gray-800">
+    <div class="flex items-center justify-center">
+      <h1 class="text-4xl font-crayon">Coffee Shop</h1>
+    </div>
+    <nav class="mt-4 flex flex-wrap justify-center font-crayon">
+      <a href="/about" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">About</a>
+      <a href="/contact" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">Contact</a>
+      @if (isLoggedIn) {
+        <button (click)="logout()" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">Logout</button>
+        <a href="/admin" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">Admin Panel</a>
+      } @else {
+        <a href="/login" class="mx-2 my-1 text-lg text-gray-800 sm:mx-4 underline">Login</a>
+      }
+    </nav>
+  </header>
+  <main class="container mx-auto py-5">
+    <section class="font-crayon text-center">
+      <h3 class="text-4xl mb-4">Menu</h3>
+      @if (menuItems.length > 0) {
+        <div>
+          <h4 class="text-xl font-bold">Coffee</h4>
+          <div class="flex flex-wrap justify-center">
+            @if (Coffee == 0) {
+              <p>No coffee available</p>
+            } @else {
+              @for (menuItem of menuItems; track menuItems) {
+                @if (menuItem.category === 'Coffee') {
+                  <div class="border rounded inline-block min-w-96 max-w-96 mx-1 mb-4">
+                    <div class="p-2">
+                      <p class="mb-2 font-bold overflow-auto break-words">{{ menuItem.name }}</p>
+                      <p class="mb-2 overflow-auto break-words">{{ menuItem.description }}</p>
+                      <p class="underline">{{ menuItem.price }}€</p>
+                    </div>
+                  </div>
+                }
+              }
+            }
+          </div>
+          <h4 class="text-xl font-bold">Snacks</h4>
+          <div class="flex flex-wrap justify-center">
+            @if (Snacks == 0) {
+              <p>No snacks available</p>
+            } @else {
+              @for (menuItem of menuItems; track menuItems) {
+                @if (menuItem.category === 'Snacks') {
+                  <div class="border rounded inline-block min-w-96 max-w-96 mx-1 mb-4">
+                    <div class="p-2">
+                      <p class="mb-2 font-bold overflow-auto break-words">{{ menuItem.name }}</p>
+                      <p class="mb-2 overflow-auto break-words">{{ menuItem.description }}</p>
+                      <p class="underline">{{ menuItem.price }}€</p>
+                    </div>
+                  </div>
+                }
+              }
+            }
+          </div>
+          <h4 class="text-xl font-bold">Desserts</h4>
+          <div class="flex flex-wrap justify-center">
+            @if (Desserts == 0) {
+              <p>No desserts available</p>
+            } @else {
+              @for (menuItem of menuItems; track menuItems) {
+                @if (menuItem.category === 'Desserts') {
+                  <div class="border rounded inline-block min-w-96 max-w-96 mx-1 mb-4">
+                    <div class="p-2">
+                      <p class="mb-2 font-bold overflow-auto break-words">{{ menuItem.name }}</p>
+                      <p class="mb-2 overflow-auto break-words">{{ menuItem.description }}</p>
+                      <p class="underline">{{ menuItem.price }}€</p>
+                    </div>
+                  </div>
+                }
+              }
+            }
+          </div>
+        </div>
+      } @else {
+        <p>No menu items available</p>
+      }
+    </section>
+  </main>
+</div>
